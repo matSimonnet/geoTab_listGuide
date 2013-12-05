@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EPNS</string>
+    <string name="action_settings">Paramètres</string>
+    <string name="bottom">Bas</string>
+    <string name="up">Haut</string>
+    <string name="right">Droite</string>
+    <string name="left">Gauche</string>
+    <string name="found">Trouvé</string>
+
+</resources>
