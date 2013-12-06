@@ -78,6 +78,7 @@ public class MapViewTouchListener implements OnTouchListener {
 							&& (otherPoint.x >= x - TARGET_SIZE / 2)) {
 						if (!MyTTS.getInstance(context).isSpeaking()) {
 							((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(150);
+							MyTTS.getInstance(context).setPitch(1.5f);
 							MyTTS.getInstance(context).speak(
 									n.getName(),
 									TextToSpeech.QUEUE_ADD,
@@ -94,24 +95,28 @@ public class MapViewTouchListener implements OnTouchListener {
 
 				if (y - pointToReach.y < -TARGET_SIZE / 2) { // If too high
 					if (!MyTTS.getInstance(context).isSpeaking()) {
+						MyTTS.getInstance(context).setPitch(1.5f);
 						MyTTS.getInstance(context).speak(
 								context.getResources().getString(R.string.bottom),
 								TextToSpeech.QUEUE_ADD, null);
 					}
 				} else if (y - pointToReach.y > TARGET_SIZE / 2) { // If too low
 					if (!MyTTS.getInstance(context).isSpeaking()) {
+						MyTTS.getInstance(context).setPitch(1.5f);
 						MyTTS.getInstance(context).speak(
 								context.getResources().getString(R.string.up),
 								TextToSpeech.QUEUE_ADD, null);
 					}
 				} else if (x - pointToReach.x < -TARGET_SIZE / 2) { // If too much on the left
 					if (!MyTTS.getInstance(context).isSpeaking()) {
+						MyTTS.getInstance(context).setPitch(1.5f);
 						MyTTS.getInstance(context).speak(
 								context.getResources().getString(R.string.right),
 								TextToSpeech.QUEUE_ADD, null);
 					}
 				} else if (x - pointToReach.x > TARGET_SIZE / 2) { // If too much on the right
 					if (!MyTTS.getInstance(context).isSpeaking()) {
+						MyTTS.getInstance(context).setPitch(1.5f);
 						MyTTS.getInstance(context).speak(
 								context.getResources().getString(R.string.left),
 								TextToSpeech.QUEUE_ADD, null);
@@ -119,6 +124,7 @@ public class MapViewTouchListener implements OnTouchListener {
 				} else {
 					if (!MyTTS.getInstance(context).isSpeaking()) { // Found
 						((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(150);
+						MyTTS.getInstance(context).setPitch(1.5f);
 						MyTTS.getInstance(context).speak(
 								nodeToReach.getName() + " " +
 								context.getResources().getString(R.string.found),

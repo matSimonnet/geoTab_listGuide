@@ -66,6 +66,7 @@ public class ListTouchListener implements OnTouchListener {
 						|| !MyTTS.getInstance(context).isSpeaking())) {
 				Object selectedItem = adapter.getItem(adapterIndex);
 				((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(150);
+				MyTTS.getInstance(context).setPitch(0.5f);
 				MyTTS.getInstance(context).speak(selectedItem.toString(), TextToSpeech.QUEUE_FLUSH, null);
 				((MainActivity) context).setSelectedItem(selectedItem);
 				lastAdapterIndex = adapterIndex;
