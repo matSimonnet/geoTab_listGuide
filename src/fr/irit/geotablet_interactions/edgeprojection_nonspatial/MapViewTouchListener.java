@@ -64,7 +64,10 @@ public class MapViewTouchListener implements OnTouchListener {
 			float x = MotionEventCompat.getX(ev, pointerIndex);
 
 	
+			
+			OsmNode nodeToReach = (OsmNode) ((MainActivity) context).getSelectedItem();
 			Set<OsmNode> otherNode = (Set<OsmNode>) ((MainActivity) context).getOsmNodes();
+			otherNode.remove(nodeToReach);
 					
 			if (otherNode != null){
 				for (OsmNode n : otherNode) {
@@ -85,7 +88,7 @@ public class MapViewTouchListener implements OnTouchListener {
 			}
 			
 			
-			OsmNode nodeToReach = (OsmNode) ((MainActivity) context).getSelectedItem();
+			
 			if (nodeToReach != null) {
 				Point pointToReach = nodeToReach.toPoint((MapView) v);
 
@@ -117,8 +120,8 @@ public class MapViewTouchListener implements OnTouchListener {
 					if (!MyTTS.getInstance(context).isSpeaking()) { // Found
 						((Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE)).vibrate(150);
 						MyTTS.getInstance(context).speak(
-								context.getResources().getString(R.string.found)
-								+ " " + nodeToReach.getName(),
+								nodeToReach.getName() + " " +
+								context.getResources().getString(R.string.found),
 								TextToSpeech.QUEUE_ADD, null);
 					}
 				}
