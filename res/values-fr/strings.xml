@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EPNS</string>
+    <string name="app_name">DirectGuidance</string>
     <string name="action_settings">Paramètres</string>
     <string name="bottom">Bas</string>
     <string name="up">Haut</string>
