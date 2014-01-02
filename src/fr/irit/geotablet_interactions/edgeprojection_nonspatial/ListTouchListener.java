@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.widget.Adapter;
-
+import fr.irit.geotablet_interactions.edgeprojection_nonspatial.MapViewTouchListener;
 /**
  * Listener to scroll with finger(s) and read with TTS a list from an adapter
  * 
@@ -24,6 +24,8 @@ public class ListTouchListener implements OnTouchListener {
 	private Adapter adapter;
 	private int lastAdapterIndex;
 	private int activePointerId;
+	private MapViewTouchListener mapViewTouchListener;
+	private String logAnnounce = "mute";
 
 	/**
 	 * Constructor
@@ -38,12 +40,13 @@ public class ListTouchListener implements OnTouchListener {
 		this.context = context;
 		this.adapter = adapter;
 		this.lastAdapterIndex = -1;
+		mapViewTouchListener = new MapViewTouchListener(context);
 	}
 
 	@Override
 	public boolean onTouch(View v, MotionEvent ev) {
 		int action = MotionEventCompat.getActionMasked(ev);
-
+	
 		switch (action) {
 		case MotionEvent.ACTION_DOWN: {
 			// Save the ID of this pointer (for dragging)
@@ -57,6 +60,8 @@ public class ListTouchListener implements OnTouchListener {
 
 			// Calculate adapter index to say
 			int adapterIndex = (int) (MotionEventCompat.getY(ev, pointerIndex) / (v.getHeight() / adapter.getCount()));
+			float y = MotionEventCompat.getY(ev, pointerIndex);
+			float x = MotionEventCompat.getX(ev, pointerIndex);
 
 			// If the index is valid (>= 0 and less than items count),
 			// and different from the last one said or the TTS is not speaking
@@ -70,9 +75,19 @@ public class ListTouchListener implements OnTouchListener {
 				MyTTS.getInstance(context).speak(selectedItem.toString(), TextToSpeech.QUEUE_FLUSH, null);
 				((MainActivity) context).setSelectedItem(selectedItem);
 				lastAdapterIndex = adapterIndex;
+				logAnnounce = selectedItem.toString();
 			}
 
+			try {
+				mapViewTouchListener.Datalogger(x, y, 0, 0, "list", logAnnounce);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			
 			break;
+			
+			
 		}
 
 		case MotionEvent.ACTION_UP: {

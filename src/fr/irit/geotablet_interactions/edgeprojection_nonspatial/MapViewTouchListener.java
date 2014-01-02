@@ -47,7 +47,6 @@ public class MapViewTouchListener implements OnTouchListener {
 	private boolean firstTouch = true;
 	private String logContact = "nothing";
 	private String logAnnounce = "mute";
-	private String lastAnnounce = "nothing";
 
 	/**
 	 * Constructor

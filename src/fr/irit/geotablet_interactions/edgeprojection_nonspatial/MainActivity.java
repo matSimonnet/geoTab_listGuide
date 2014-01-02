@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		 mapView = (MyMapView) findViewById(R.id.map_view);
+		mapView = (MyMapView) findViewById(R.id.map_view);
 		nodes = mapView.getNodes();
 		
 
