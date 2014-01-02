@@ -1,12 +1,19 @@
 package fr.irit.geotablet_interactions.edgeprojection_nonspatial;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 
 import org.osmdroid.views.MapView;
 
-import fr.irit.edgeprojection_nonspatial.R;
 import android.content.Context;
 import android.graphics.Point;
+import android.os.Environment;
 import android.os.Vibrator;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.view.MotionEventCompat;
@@ -14,7 +21,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-import fr.irit.geotablet_interactions.common.MyMapView;
+import fr.irit.edgeprojection_nonspatial.R;
 import fr.irit.geotablet_interactions.common.MyTTS;
 import fr.irit.geotablet_interactions.common.OsmNode;
 
@@ -33,6 +40,14 @@ public class MapViewTouchListener implements OnTouchListener {
 
 	private Context context;
 	private int activePointerId;
+	
+	//for logging
+	private PrintWriter output;
+	private Date myDate;
+	private boolean firstTouch = true;
+	private String logContact = "nothing";
+	private String logAnnounce = "mute";
+	private String lastAnnounce = "nothing";
 
 	/**
 	 * Constructor
@@ -43,6 +58,17 @@ public class MapViewTouchListener implements OnTouchListener {
 	public MapViewTouchListener(Context context) {
 		super();
 		this.context = context;
+		//create file for logging
+		 myDate = new Date();
+		 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss",Locale.getDefault()); 
+		 new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/geoTablet/").mkdir();
+		 String logFilename = simpleDateFormat.format(new Date())+ "_DirectGuidance_" +".csv";
+		 File logFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/geoTablet/" + logFilename);
+		     try {
+		       output = new PrintWriter(new FileWriter(logFile));
+		     } catch (IOException e) {
+		       e.printStackTrace();
+		     }
 	}
 
 	@Override
@@ -83,7 +109,9 @@ public class MapViewTouchListener implements OnTouchListener {
 									n.getName(),
 									TextToSpeech.QUEUE_ADD,
 									null);
+							logAnnounce = n.getName();
 						}
+						 logContact = n.getName();
 					}
 				}
 			}
@@ -129,12 +157,23 @@ public class MapViewTouchListener implements OnTouchListener {
 								nodeToReach.getName() + " " +
 								context.getResources().getString(R.string.found),
 								TextToSpeech.QUEUE_ADD, null);
+						logAnnounce = nodeToReach.getName() + " found";
 					}
+					logContact = nodeToReach.getName() + " found";
 				}
 			}
 
+			//for logging
+			double lat = ((MainActivity) context).mapView.getProjection().fromPixels(x, y).getLatitudeE6();
+			double lon = ((MainActivity) context).mapView.getProjection().fromPixels(x, y).getLongitudeE6();
+			Datalogger(x,y,lat,lon,logContact,logAnnounce);
+			logAnnounce = "mute";
+			logContact = "nothing";
+
 			break;
 		}
+		
+		
 		
 		
 		//Hélène's code to only display nodeToReach
@@ -216,4 +255,20 @@ public class MapViewTouchListener implements OnTouchListener {
 		return true;
 	}
 
+
+public void Datalogger (float x, float y, double lat, double lon, String logContact, String logAnnounce){
+    if (firstTouch){
+    output.println("time(ms);x;y;lat;lon;contact;annonce");
+    firstTouch = false;
+    }
+    Date touchDate = new Date();
+    String str = touchDate.getTime()-myDate.getTime() + ";" 
+    + (int)x + ";" + (int)y + ";" 
+    + lat/100000 + ";" + lon/100000 + ";"
+    + logContact + ";" + logAnnounce;
+    Log.e("log",str);
+    output.println(str);
+    output.flush();
+  }
+	
 }

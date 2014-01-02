@@ -22,13 +22,14 @@ import fr.irit.geotablet_interactions.common.OsmNode;
 public class MainActivity extends Activity {
 	private Object selectedItem;
 	private Set<OsmNode> nodes;
+	public MyMapView mapView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		MyMapView mapView = (MyMapView) findViewById(R.id.map_view);
+		 mapView = (MyMapView) findViewById(R.id.map_view);
 		nodes = mapView.getNodes();
 		
 
