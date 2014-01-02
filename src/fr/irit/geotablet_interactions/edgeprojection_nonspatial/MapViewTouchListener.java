@@ -45,8 +45,8 @@ public class MapViewTouchListener implements OnTouchListener {
 	private PrintWriter output;
 	private Date myDate;
 	private boolean firstTouch = true;
-	private String logContact = "nothing";
-	private String logAnnounce = "mute";
+	private String logContact = "";
+	private String logAnnounce = "";
 
 	/**
 	 * Constructor
@@ -61,7 +61,7 @@ public class MapViewTouchListener implements OnTouchListener {
 		 myDate = new Date();
 		 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss",Locale.getDefault()); 
 		 new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/geoTablet/").mkdir();
-		 String logFilename = simpleDateFormat.format(new Date())+ "_DirectGuidance_" +".csv";
+		 String logFilename = simpleDateFormat.format(new Date())+ "_DirectGuidance" +".csv";
 		 File logFile = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/geoTablet/" + logFilename);
 		     try {
 		       output = new PrintWriter(new FileWriter(logFile));
@@ -88,8 +88,6 @@ public class MapViewTouchListener implements OnTouchListener {
 			float y = MotionEventCompat.getY(ev, pointerIndex);
 			float x = MotionEventCompat.getX(ev, pointerIndex);
 
-	
-			
 			OsmNode nodeToReach = (OsmNode) ((MainActivity) context).getSelectedItem();
 			Set<OsmNode> otherNode = (Set<OsmNode>) ((MainActivity) context).getOsmNodes();
 			otherNode.remove(nodeToReach);
@@ -166,8 +164,8 @@ public class MapViewTouchListener implements OnTouchListener {
 			double lat = ((MainActivity) context).mapView.getProjection().fromPixels(x, y).getLatitudeE6();
 			double lon = ((MainActivity) context).mapView.getProjection().fromPixels(x, y).getLongitudeE6();
 			Datalogger(x,y,lat,lon,logContact,logAnnounce);
-			logAnnounce = "mute";
-			logContact = "nothing";
+			logAnnounce = "";
+			logContact = "";
 
 			break;
 		}
@@ -265,7 +263,6 @@ public void Datalogger (float x, float y, double lat, double lon, String logCont
     + (int)x + ";" + (int)y + ";" 
     + lat/100000 + ";" + lon/100000 + ";"
     + logContact + ";" + logAnnounce;
-    Log.e("log",str);
     output.println(str);
     output.flush();
   }
