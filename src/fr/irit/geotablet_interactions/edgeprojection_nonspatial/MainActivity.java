@@ -30,10 +30,8 @@ public class MainActivity extends Activity {
 		
     	//set Full screen landscape
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		
 		//hide actionBar (up) -> does not work on galaxyTab 10.1
-		//requestWindowFeature(Window.FEATURE_NO_TITLE);
-				
+		//requestWindowFeature(Window.FEATURE_NO_TITLE);	
 		//hide menuBar (bottom)
 		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
