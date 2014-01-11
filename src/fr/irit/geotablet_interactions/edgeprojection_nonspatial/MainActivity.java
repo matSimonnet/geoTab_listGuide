@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import fr.irit.edgeprojection_nonspatial.R;
@@ -33,7 +34,7 @@ public class MainActivity extends Activity {
 		//hide actionBar (up) -> does not work on galaxyTab 10.1
 		//requestWindowFeature(Window.FEATURE_NO_TITLE);	
 		//hide menuBar (bottom)
-		//this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE);
 
 		mapView = (MyMapView) findViewById(R.id.map_view);
