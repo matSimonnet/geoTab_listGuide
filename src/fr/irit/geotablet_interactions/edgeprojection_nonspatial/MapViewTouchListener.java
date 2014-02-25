@@ -34,7 +34,7 @@ import fr.irit.geotablet_interactions.common.OsmNode;
  * 
  */
 public class MapViewTouchListener implements OnTouchListener {
-	private static final int TARGET_SIZE = 96; // Touch target size for on screen elements (dp)
+	private static final int TARGET_SIZE = 120; // Touch target size for on screen elements (dp)
 
 	private static final int INVALID_POINTER_ID = -1;
 
